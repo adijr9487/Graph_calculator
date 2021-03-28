@@ -23,6 +23,11 @@ const DRAW_GRID = (ctx, canvas, screenOrigin, GRAPH_DATA) => {
         y: initialY,
     }
 
+    let center = {
+        x:-initialX,
+        y:-initialY
+    }
+
     let printing = {
         x: 0,
         y: 0,
@@ -46,6 +51,11 @@ const DRAW_GRID = (ctx, canvas, screenOrigin, GRAPH_DATA) => {
                 gridType = "axis"
             }else if(scanning.x % GRAPH_DATA.major_space === 0){
                 gridType = "major"
+            }
+
+            if(gridType === 'axis' || gridType === 'major'){
+                let value = (printing.x - center.x) / GRAPH_DATA.major_space
+                SHOW_TEXT(ctx, value, 15, printing.x + 5, center.y + 20)
             }
 
             MAKE_LINE(ctx, canvas, from, to, gridType)
@@ -84,6 +94,12 @@ const DRAW_GRID = (ctx, canvas, screenOrigin, GRAPH_DATA) => {
                 gridType = "major"
             }
 
+            if(gridType === 'axis' || gridType === 'major'){
+                let value = (center.y - printing.y) / GRAPH_DATA.major_space
+                if(value != 0)
+                SHOW_TEXT(ctx, value, 15, center.x + 5, printing.y - 5)
+            }
+
             // console.log("Hello")
             MAKE_LINE(ctx, canvas, from, to , gridType)
             
@@ -93,6 +109,13 @@ const DRAW_GRID = (ctx, canvas, screenOrigin, GRAPH_DATA) => {
         printing.y++;
         scanning.y++;
     }
+
+}
+
+const SHOW_TEXT = (ctx, text, fontSize, x, y) => {
+    ctx.font = fontSize + 'px Arial';
+    ctx.fillStyle = "#ffffff"
+    ctx.fillText(text, x, y)
 }
 
 const MAKE_LINE = (ctx, canvas, from, to, gridType) => {

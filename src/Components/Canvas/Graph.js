@@ -112,7 +112,7 @@ const mouseDownHandler = (e) => {
     }
 }
 const mouseUpHandler = (e) => {
-    console.log(SCREEN_ORIGIN_POSITION)
+    // console.log(SCREEN_ORIGIN_POSITION)
     
     if(MOUSE_DOWN !== undefined){
         let delta = ({
