@@ -1,0 +1,15 @@
+.Canvas{
+    height: 100%;
+    width: 100%;
+}
+.baseDIV{
+    background-color: #2A2A2A;
+    position: absolute;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    height: 100%;
+    width: 100%;
+}
