@@ -6,7 +6,7 @@ import React, {useRef, useEffect, useState} from 'react'
 import classes from "./Graph.css"
 
 //functions
-import {setContextAndCanvas, renderGraph, cleanUpFunction, initializeAllEventListener, initializeVariables} from "./Components/Canvas/Graph"
+import {setContextAndCanvas, renderGraph, cleanUpFunction, initializeAllEventListener, initializeVariables} from "./Canvas/Graph"
 
 const Graph = (props) => {
 
