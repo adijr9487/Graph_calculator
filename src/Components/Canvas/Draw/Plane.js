@@ -24,7 +24,7 @@ const makeRect = (ctx, canvas, margin, height, width) => {
     }
 
     ctx.beginPath();
-    ctx.shadowColor = 'rgb(0, 0, 0, 10%)';
+    ctx.shadowColor = 'rgba(0, 0, 0, 0.1)';
     ctx.shadowBlur = 30;
     ctx.lineWidth = 1;
     ctx.fillStyle = "#393939";

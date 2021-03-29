@@ -18,8 +18,8 @@ let GRAPH_DATA = {
     minor_space: 10,
     major_space: 100, 
     scale: 1,
-    mini_graph_scale: 0.2   
-
+    mini_graph_scale: 0.2, 
+    label_font_size: 15,
 }
 //This function will run after the Graph React component is rendered;
 export const setContextAndCanvas = (ctx, canvas) => {
