@@ -63,6 +63,10 @@ export const initializeAllEventListener = () => {
     CANVAS.addEventListener("mousedown", mouseDownHandler)
     CANVAS.addEventListener("mouseup", mouseUpHandler)
     CANVAS.addEventListener("mouseleave", mouseUpHandler)
+    CANVAS.addEventListener("touchstart", (e) => mouseDownHandler({x:e.changedTouches[0].clientX, y:e.changedTouches[0].clientY}))
+    CANVAS.addEventListener("touchmove", (e) => mouseMoveHandler({x:e.changedTouches[0].clientX, y:e.changedTouches[0].clientY}))
+    CANVAS.addEventListener("touchend", (e) => mouseUpHandler({x:e.changedTouches[0].clientX, y:e.changedTouches[0].clientY}))
+    CANVAS.addEventListener("touchcancel", (e) => mouseUpHandler({x:e.changedTouches[0].clientX, y:e.changedTouches[0].clientY}))
 }
 
 export const renderGraph =() => {
@@ -131,7 +135,6 @@ const mouseUpHandler = (e) => {
     MOUSE_DOWN = undefined;
     WHEN_MOUSE_DOWN_SCREEN_POSITION = undefined
 }
-
 
 
 export const cleanUpFunction = () => {
