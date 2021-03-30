@@ -63,10 +63,12 @@ export const initializeAllEventListener = () => {
     CANVAS.addEventListener("mousedown", mouseDownHandler)
     CANVAS.addEventListener("mouseup", mouseUpHandler)
     CANVAS.addEventListener("mouseleave", mouseUpHandler)
-    CANVAS.addEventListener("touchstart", (e) => mouseDownHandler({x:e.changedTouches[0].clientX, y:e.changedTouches[0].clientY}))
-    CANVAS.addEventListener("touchmove", (e) => mouseMoveHandler({x:e.changedTouches[0].clientX, y:e.changedTouches[0].clientY}))
-    CANVAS.addEventListener("touchend", (e) => mouseUpHandler({x:e.changedTouches[0].clientX, y:e.changedTouches[0].clientY}))
-    CANVAS.addEventListener("touchcancel", (e) => mouseUpHandler({x:e.changedTouches[0].clientX, y:e.changedTouches[0].clientY}))
+
+    // passing second argument as event (to set event.preventDefault (as first argument is no more (((event)))  )) and third argument true (to recognise when it is touched)
+    CANVAS.addEventListener("touchstart", (e) => mouseDownHandler({x:e.changedTouches[0].clientX, y:e.changedTouches[0].clientY}, e, true))
+    CANVAS.addEventListener("touchmove", (e) => mouseMoveHandler({x:e.changedTouches[0].clientX, y:e.changedTouches[0].clientY}, e, true))
+    CANVAS.addEventListener("touchend", (e) => mouseUpHandler({x:e.changedTouches[0].clientX, y:e.changedTouches[0].clientY}, e, true))
+    CANVAS.addEventListener("touchcancel", (e) => mouseUpHandler({x:e.changedTouches[0].clientX, y:e.changedTouches[0].clientY}, e, true))
 }
 
 export const renderGraph =() => {
@@ -92,7 +94,10 @@ export const renderGraph =() => {
 const clickHandler = (e) => {
 }
 
-const mouseMoveHandler = (e) => {
+const mouseMoveHandler = (e, event, isTouched) => {
+    if(isTouched){
+        event.preventDefault();
+    }
     if(MOUSE_DOWN !== undefined){
         let delta = ({
             x: MOUSE_DOWN.x - e.x,
@@ -109,13 +114,19 @@ const mouseMoveHandler = (e) => {
 
     }
 }
-const mouseDownHandler = (e) => {
+const mouseDownHandler = (e, event, isTouched) => {
+    if(isTouched){
+        event.preventDefault();
+    }
     MOUSE_DOWN = {
         x: e.x,
         y: e.y,
     }
 }
-const mouseUpHandler = (e) => {
+const mouseUpHandler = (e, event, isTouched) => {
+    if(isTouched){
+        event.preventDefault();
+    }
     // console.log(SCREEN_ORIGIN_POSITION)
     
     if(MOUSE_DOWN !== undefined){
