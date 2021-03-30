@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/Graph_calculator/static/css/main.af082d23.chunk.css",
-    "main.js": "/Graph_calculator/static/js/main.ca21c8c7.chunk.js",
-    "main.js.map": "/Graph_calculator/static/js/main.ca21c8c7.chunk.js.map",
+    "main.js": "/Graph_calculator/static/js/main.99c4e96c.chunk.js",
+    "main.js.map": "/Graph_calculator/static/js/main.99c4e96c.chunk.js.map",
     "runtime-main.js": "/Graph_calculator/static/js/runtime-main.1fa0af50.js",
     "runtime-main.js.map": "/Graph_calculator/static/js/runtime-main.1fa0af50.js.map",
     "static/js/2.d40d6ad0.chunk.js": "/Graph_calculator/static/js/2.d40d6ad0.chunk.js",
@@ -15,6 +15,6 @@
     "static/js/runtime-main.1fa0af50.js",
     "static/js/2.d40d6ad0.chunk.js",
     "static/css/main.af082d23.chunk.css",
-    "static/js/main.ca21c8c7.chunk.js"
+    "static/js/main.99c4e96c.chunk.js"
   ]
 }
