@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/Graph_calculator/static/css/main.af082d23.chunk.css",
+    "main.js": "/Graph_calculator/static/js/main.ca21c8c7.chunk.js",
+    "main.js.map": "/Graph_calculator/static/js/main.ca21c8c7.chunk.js.map",
+    "runtime-main.js": "/Graph_calculator/static/js/runtime-main.1fa0af50.js",
+    "runtime-main.js.map": "/Graph_calculator/static/js/runtime-main.1fa0af50.js.map",
+    "static/js/2.d40d6ad0.chunk.js": "/Graph_calculator/static/js/2.d40d6ad0.chunk.js",
+    "static/js/2.d40d6ad0.chunk.js.map": "/Graph_calculator/static/js/2.d40d6ad0.chunk.js.map",
+    "index.html": "/Graph_calculator/index.html",
+    "static/css/main.af082d23.chunk.css.map": "/Graph_calculator/static/css/main.af082d23.chunk.css.map",
+    "static/js/2.d40d6ad0.chunk.js.LICENSE.txt": "/Graph_calculator/static/js/2.d40d6ad0.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.1fa0af50.js",
+    "static/js/2.d40d6ad0.chunk.js",
+    "static/css/main.af082d23.chunk.css",
+    "static/js/main.ca21c8c7.chunk.js"
+  ]
+}
