@@ -58,12 +58,25 @@ const DRAW_GRID = (ctx, canvas, screenOrigin, GRAPH_DATA) => {
       if (gridType === "axis" || gridType === "major") {
         //here major and axis is verticle line
         let value = (printing.x - center.x) / GRAPH_DATA.major_space;
+        let showZero = true
+
+        let positionY = center.y + 20
+        if(center.y < 0){
+          positionY = 20
+          showZero = false
+        }
+        else if(center.y > (canvas.height - (10 + GRAPH_DATA.label_font_size))){
+          positionY = canvas.height - 10
+          showZero = false
+        }
+
+        if(!(showZero == false && value == 0))
         SHOW_TEXT(
           ctx,
           value,
           GRAPH_DATA.label_font_size,
           printing.x + 5,
-          center.y + 20
+          positionY
         );
       }
 
@@ -76,44 +89,44 @@ const DRAW_GRID = (ctx, canvas, screenOrigin, GRAPH_DATA) => {
   }
 
   //checking if the verticle axis is inside the screen
-  if (Math.abs(screenOrigin.x) > canvas.width / 2) {
-    if (screenOrigin.x < 0) printing.x = printing.x;
-    else if (screenOrigin.x > 0) printing.x = 10;
-    //here(inside if) y axis is outside the screen
+  // if (Math.abs(screenOrigin.x) > canvas.width / 2) {
+  //   if (screenOrigin.x < 0) printing.x = printing.x;
+  //   else if (screenOrigin.x > 0) printing.x = 10;
+  //   //here(inside if) y axis is outside the screen
 
-    //using while loop for horizontal grid line (to lable point on the line outside the screen)
+  //   //using while loop for horizontal grid line (to lable point on the line outside the screen)
 
-    while (scanning.y < screenOrigin.y + canvas.height / 2) {
-      if (scanning.y % GRAPH_DATA.major_space === 0) {
-        let value = (center.y - printing.y) / GRAPH_DATA.major_space; //center is the center of screen // printing is the position with respect to the screen
-        if (value != 0) {
-          let newPositionY = printing.x;
-          if (screenOrigin.x < 0) {
-            // this is used to adjust the right margin(part) of screen to display label/
-            newPositionY =
-              newPositionY -
-              GRAPH_DATA.label_font_size * (value + "").length +
-              (value + "").length;
-          }
-          SHOW_TEXT(
-            ctx,
-            value,
-            GRAPH_DATA.label_font_size,
-            newPositionY,
-            printing.y - 5
-          );
-        }
+  //   while (scanning.y < screenOrigin.y + canvas.height / 2) {
+  //     if (scanning.y % GRAPH_DATA.major_space === 0) {
+  //       let value = (center.y - printing.y) / GRAPH_DATA.major_space; //center is the center of screen // printing is the position with respect to the screen
+  //       if (value != 0) {
+  //         let newPositionY = printing.x;
+  //         if (screenOrigin.x < 0) {
+  //           // this is used to adjust the right margin(part) of screen to display label/
+  //           newPositionY =
+  //             newPositionY -
+  //             GRAPH_DATA.label_font_size * (value + "").length +
+  //             (value + "").length;
+  //         }
+  //         SHOW_TEXT(
+  //           ctx,
+  //           value,
+  //           GRAPH_DATA.label_font_size,
+  //           newPositionY,
+  //           printing.y - 5
+  //         );
+  //       }
 
-        // this is use so that we dont have to iterate for each point just to lable the number line
-        //after finding first label we will just with space of major_space
-        printing.y += GRAPH_DATA.major_space;
-        scanning.y += GRAPH_DATA.major_space;
-      } else {
-        printing.y++;
-        scanning.y++;
-      }
-    }
-  }
+  //       // this is use so that we dont have to iterate for each point just to lable the number line
+  //       //after finding first label we will just with space of major_space
+  //       printing.y += GRAPH_DATA.major_space;
+  //       scanning.y += GRAPH_DATA.major_space;
+  //     } else {
+  //       printing.y++;
+  //       scanning.y++;
+  //     }
+  //   }
+  // }
 
   scanning.x = initialX;
   scanning.y = initialY;
@@ -146,16 +159,26 @@ const DRAW_GRID = (ctx, canvas, screenOrigin, GRAPH_DATA) => {
       // console.log("Hello")
       MAKE_LINE(ctx, canvas, from, to, gridType);
 
+
       if (gridType === "axis" || gridType === "major") {
-        //if grid line is axis or major
         let value = (center.y - printing.y) / GRAPH_DATA.major_space; //center is the center of screen // printing is the position with respect to the screen
+        let textWidth = CALCULATE_WIDTH_TEXT(ctx, value, GRAPH_DATA.label_font_size)
+
+        let positionX = center.x + 5
+        if(center.x < 0){
+          positionX = 5
+        }
+        else if(center.x + 5 + textWidth > canvas.width - 5){
+          positionX = canvas.width - (5 + textWidth)
+        }
+
         if (value != 0)
           SHOW_TEXT(
             ctx,
             value,
             GRAPH_DATA.label_font_size,
-            center.x + 5,
-            printing.y - 5
+            positionX,
+            printing.y + 20
           );
       }
     } else if (initialY % GRAPH_DATA.minor_space !== 0) {
@@ -166,35 +189,40 @@ const DRAW_GRID = (ctx, canvas, screenOrigin, GRAPH_DATA) => {
   }
 
   //checking if the horizontal axis is inside the screen
-  if (Math.abs(screenOrigin.y) > canvas.height / 2) {
-    if (screenOrigin.y < 0) printing.y = printing.y - 10;
-    else if (screenOrigin.y > 0) printing.y = 20;
-    // console.log("Outside")
-    //here(inside if) x axis is outside the screen
+  // if (Math.abs(screenOrigin.y) > canvas.height / 2) {
+  //   if (screenOrigin.y < 0) printing.y = printing.y - 10;
+  //   else if (screenOrigin.y > 0) printing.y = 20;
+  //   // console.log("Outside")
+  //   //here(inside if) x axis is outside the screen
 
-    //using while loop for horizontal grid line
-    while (scanning.x < screenOrigin.x + canvas.width / 2) {
-      if (scanning.x % GRAPH_DATA.major_space === 0) {
-        //if this point is a grid line
-        let value = (printing.x - center.x) / GRAPH_DATA.major_space;
-        if (value != 0)
-          SHOW_TEXT(
-            ctx,
-            value,
-            GRAPH_DATA.label_font_size,
-            printing.x + 5,
-            printing.y
-          );
+  //   //using while loop for horizontal grid line
+  //   while (scanning.x < screenOrigin.x + canvas.width / 2) {
+  //     if (scanning.x % GRAPH_DATA.major_space === 0) {
+  //       //if this point is a grid line
+  //       let value = (printing.x - center.x) / GRAPH_DATA.major_space;
+  //       if (value != 0)
+  //         SHOW_TEXT(
+  //           ctx,
+  //           value,
+  //           GRAPH_DATA.label_font_size,
+  //           printing.x + 5,
+  //           printing.y
+  //         );
 
-        printing.x += GRAPH_DATA.major_space;
-        scanning.x += GRAPH_DATA.major_space;
-      } else {
-        printing.x++;
-        scanning.x++;
-      }
-    }
-  }
+  //       printing.x += GRAPH_DATA.major_space;
+  //       scanning.x += GRAPH_DATA.major_space;
+  //     } else {
+  //       printing.x++;
+  //       scanning.x++;
+  //     }
+  //   }
+  // }
 };
+
+const CALCULATE_WIDTH_TEXT = (ctx, text, font) => {
+  ctx.font = font + "px Arial"
+  return ctx.measureText(text).width
+}
 
 const SHOW_TEXT = (ctx, text, fontSize, x, y) => {
   ctx.font = fontSize + "px Arial";
