@@ -36,7 +36,7 @@ const DRAW_GRID = (ctx, canvas, screenOrigin, GRAPH_DATA) => {
 
   //draw verticle grid line (scanning)
   while (scanning.x < screenOrigin.x + canvas.width / 2) {
-    if (scanning.x % GRAPH_DATA.minor_space === 0) {
+    if (scanning.x % (GRAPH_DATA.minor_space) * GRAPH_DATA.scale === 0) {
       //if this point is a grid line
       let from = {
         x: printing.x,
@@ -51,13 +51,13 @@ const DRAW_GRID = (ctx, canvas, screenOrigin, GRAPH_DATA) => {
       let gridType = "minor";
       if (scanning.x === 0) {
         gridType = "axis";
-      } else if (scanning.x % GRAPH_DATA.major_space === 0) {
+      } else if (scanning.x % (GRAPH_DATA.major_space) * GRAPH_DATA.scale === 0) {
         gridType = "major";
       }
 
       if (gridType === "axis" || gridType === "major") {
         //here major and axis is verticle line
-        let value = (printing.x - center.x) / GRAPH_DATA.major_space;
+        let value = (printing.x - center.x) / (GRAPH_DATA.major_space) * GRAPH_DATA.scale;
         let showZero = true
 
         let positionY = center.y + 20
@@ -81,7 +81,7 @@ const DRAW_GRID = (ctx, canvas, screenOrigin, GRAPH_DATA) => {
       }
 
       MAKE_LINE(ctx, canvas, from, to, gridType);
-    } else if (initialX % GRAPH_DATA.minor_space !== 0) {
+    } else if (initialX % (GRAPH_DATA.minor_space) * GRAPH_DATA.scale !== 0) {
       //if this point is not a grid line
     }
     printing.x++;
@@ -138,7 +138,7 @@ const DRAW_GRID = (ctx, canvas, screenOrigin, GRAPH_DATA) => {
   };
   //draw horizontal grid line
   while (scanning.y < screenOrigin.y + canvas.height / 2) {
-    if (scanning.y % GRAPH_DATA.minor_space === 0) {
+    if (scanning.y % (GRAPH_DATA.minor_space) * GRAPH_DATA.scale === 0) {
       //if this point is a grid line
       let from = {
         x: printing.x,
@@ -152,7 +152,7 @@ const DRAW_GRID = (ctx, canvas, screenOrigin, GRAPH_DATA) => {
       if (scanning.y === 0) {
         //if the grid line is axis
         gridType = "axis";
-      } else if (scanning.y % GRAPH_DATA.major_space === 0) {
+      } else if (scanning.y % (GRAPH_DATA.major_space) * GRAPH_DATA.scale === 0) {
         // if the grid line is a major line(second most thick line)
         gridType = "major";
       }
@@ -161,7 +161,7 @@ const DRAW_GRID = (ctx, canvas, screenOrigin, GRAPH_DATA) => {
 
 
       if (gridType === "axis" || gridType === "major") {
-        let value = (center.y - printing.y) / GRAPH_DATA.major_space; //center is the center of screen // printing is the position with respect to the screen
+        let value = (center.y - printing.y) / (GRAPH_DATA.major_space) * GRAPH_DATA.scale; //center is the center of screen // printing is the position with respect to the screen
         let textWidth = CALCULATE_WIDTH_TEXT(ctx, value, GRAPH_DATA.label_font_size)
 
         let positionX = center.x + 5
@@ -181,7 +181,7 @@ const DRAW_GRID = (ctx, canvas, screenOrigin, GRAPH_DATA) => {
             printing.y + 20
           );
       }
-    } else if (initialY % GRAPH_DATA.minor_space !== 0) {
+    } else if (initialY % (GRAPH_DATA.minor_space) * GRAPH_DATA.scale !== 0) {
       //if this point is not a grid line
     }
     printing.y++;

@@ -4,7 +4,7 @@ import {SHOW_PLANE} from "./Draw/Plane"
 //Canas variable
 let AnimationID = undefined
 let CTX = undefined
-let CANVAS = undefined 
+let CANVAS = undefined
 
 //position
 let SCREEN_ORIGIN_POSITION = undefined
@@ -68,7 +68,10 @@ export const initializeAllEventListener = () => {
     CANVAS.addEventListener("touchstart", (e) => mouseDownHandler({x:e.changedTouches[0].clientX, y:e.changedTouches[0].clientY}, e, true))
     CANVAS.addEventListener("touchmove", (e) => mouseMoveHandler({x:e.changedTouches[0].clientX, y:e.changedTouches[0].clientY}, e, true))
     CANVAS.addEventListener("touchend", (e) => mouseUpHandler({x:e.changedTouches[0].clientX, y:e.changedTouches[0].clientY}, e, true))
-    CANVAS.addEventListener("touchcancel", (e) => mouseUpHandler({x:e.changedTouches[0].clientX, y:e.changedTouches[0].clientY}, e, true))
+    CANVAS.addEventListener("touchcancel", (e) => mouseUpHandler({ x: e.changedTouches[0].clientX, y: e.changedTouches[0].clientY }, e, true))
+
+    // Added scale handler using wheel
+    CANVAS.addEventListener("wheel", (e)=> handleScaling(e))
 }
 
 export const renderGraph =() => {
@@ -89,6 +92,24 @@ export const renderGraph =() => {
         SHOW_PLANE(CTX, CANVAS, GRAPH_DATA, SCREEN_ORIGIN_POSITION);
     }
 
+}
+
+// Handle Scaling
+const handleScaling = (e) => {
+    let factor = e.deltaY * -0.01;
+    if (factor > 0) GRAPH_DATA.major_space += 10;
+    else if (factor < 0) GRAPH_DATA.major_space -= 10;
+    GRAPH_DATA.minor_space = GRAPH_DATA.major_space / 10;
+    if (GRAPH_DATA.major_space < 70) {
+        GRAPH_DATA.major_space = 100;
+        GRAPH_DATA.minor_space = 10;
+        GRAPH_DATA.scale *= 2;
+    }
+    else if (GRAPH_DATA.major_space > 130) {
+        GRAPH_DATA.major_space = 100;
+        GRAPH_DATA.minor_space = 10;
+        GRAPH_DATA.scale /= 2;
+    }
 }
 
 const clickHandler = (e) => {
